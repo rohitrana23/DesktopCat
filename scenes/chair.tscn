@@ -1,0 +1,35 @@
+[gd_scene load_steps=3 format=3 uid="uid://b507w1kwhtlxx"]
+
+[ext_resource type="Texture2D" uid="uid://d6v7x5k8tcwn" path="res://assets/cat chair.png" id="1_tec35"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ld1i"]
+size = Vector2(60, 26)
+
+[node name="chair" type="Node2D"]
+
+[node name="Chair" type="StaticBody2D" parent="."]
+light_mask = 2
+visibility_layer = 2
+position = Vector2(551, 340)
+scale = Vector2(1.5, 1.5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Chair"]
+texture = ExtResource("1_tec35")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chair"]
+light_mask = 2
+visibility_layer = 2
+position = Vector2(1.33337, 40.3333)
+shape = SubResource("RectangleShape2D_2ld1i")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 518.0
+offset_top = 355.0
+offset_right = 646.0
+offset_bottom = 382.0
+rotation = -0.00440645
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/shadow_outline_size = 2
+text = "Press Q to Exit"

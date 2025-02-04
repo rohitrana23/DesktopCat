@@ -17,11 +17,10 @@ config/icon="res://icon.svg"
 
 [display]
 
-window/size/mode=3
-window/size/borderless=true
+window/size/viewport_width=1980
+window/size/viewport_height=1080
 window/size/transparent=true
-window/stretch/mode="viewport"
-window/stretch/aspect="ignore"
+window/subwindows/embed_subwindows=false
 
 [input]
 

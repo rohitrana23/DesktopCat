@@ -1,69 +1,88 @@
 extends CharacterBody2D
 
-
-const SPEED = 225
+const SPEED = 175
 const JUMP_VELOCITY = -400.0
+@onready var pet_sprite : Sprite2D = $Sprite2D
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var mousePos = Vector2()
-var move
+var move = false
 var goingToRest = false
-
+var rest = false
 func _ready():
 	move = false
 	get_tree().get_root().set_transparent_background(true)
-	
 
 func _physics_process(delta):
+	velocity = Vector2.ZERO  # Reset velocity each frame
+
+	# Update mouse position every frame for movement tracking
+	mousePos = get_global_mouse_position()
+
+	# Debugging the mouse position distance
+	print("Distance to mouse: ", position.distance_to(mousePos))
+
+	# Check if mouse is far enough to start moving
+	if position.distance_to(mousePos) > 350 and goingToRest==false and rest!=true:
+		move = true
+		print("Moving towards mouse")  # Debugging move trigger
+
+	# Debugging rest behavior
 	if Input.is_action_just_pressed("q"):
 		get_tree().quit()
-	if  Input.is_action_just_pressed("rmb"):
+	if Input.is_action_just_pressed("rmb") and rest==false:
+		print("Going to rest!")  # Debugging right-click trigger
 		goingToRest = true
-		move = true
-	if goingToRest == true:
-		Vector2.ZERO
-		velocity = position.direction_to(Vector2(1065,530)) * SPEED * 2
-		if position.distance_to(Vector2(1065,530)) < 5:
-			move = false
-			Vector2.ZERO
-			goingToRest = false
+	if Input.is_action_just_pressed("rmb") and rest!=false:
+		rest=false
 
-	if move == true:
+	# Resting behavior (go to a fixed position)
+	if goingToRest:
+		print("Resting: Moving to fixed position")
+		velocity = position.direction_to(Vector2(1811, 918)) * SPEED * 2
+		if position.distance_to(Vector2(1811, 918)) < 5:
+			move = false
+			goingToRest = false
+			rest=true
+			print("Reached rest position")
+	if rest==true:
+		velocity=Vector2.ZERO
+	# Moving towards mouse if not resting
+	if move:
+		print("Moving towards mouse position")
+		velocity = position.direction_to(mousePos) * SPEED * 2
+
+	if position.distance_to(mousePos) < 10:
+		move = false
+
+	# Animation state
+	if move or goingToRest:
 		$AnimatedSprite2D.play("running")
 	else:
 		$AnimatedSprite2D.play("standing")
-	print(mousePos)
-	if Input.is_action_just_pressed("lmb"):
-		mousePos = get_global_mouse_position()
-		move = true
-	if move == true and goingToRest== false:
-		velocity = Vector2.ZERO
-		velocity = position.direction_to(mousePos) * SPEED * 2
-		if position.distance_to(mousePos) < 5:
-			move = false
-			Vector2.ZERO
 
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction = Input.get_axis("ui_left", "ui_right")
-	if direction:
-		velocity.x = direction * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-	
-	move_and_slide()
+	# Flip the sprite based on movement direction
 	if velocity.x < 0:
 		$AnimatedSprite2D.scale.x = 2.857
 	elif velocity.x > 0:
 		$AnimatedSprite2D.scale.x = -2.857
-	if velocity.x == 0:
+	else:
 		$AnimatedSprite2D.scale.x = 2.857
 
-  
+	move_and_slide()  # Pass velocity to move_and_slide()
 
+func _process(delta):
+	set_passthrough(pet_sprite)
+
+func set_passthrough(sprite: Sprite2D):
+	var texture_center: Vector2 = sprite.texture.get_size() / 2
+	var texture_corners: PackedVector2Array = [
+		sprite.global_position + texture_center * Vector2(-2, -2),
+		sprite.global_position + texture_center * Vector2(2, -2),
+		sprite.global_position + texture_center * Vector2(2, 2),
+		sprite.global_position + texture_center * Vector2(-2, 2)
+	]
+
+	# Set mouse passthrough only for the pet's texture region
+	DisplayServer.window_set_mouse_passthrough(texture_corners)
