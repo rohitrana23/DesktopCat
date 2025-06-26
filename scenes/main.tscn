@@ -115,9 +115,10 @@ position = Vector2(1.33337, 40.3333)
 shape = SubResource("RectangleShape2D_o5vcr")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-offset_left = 1780.0
+texture_filter = 1
+offset_left = 1755.0
 offset_top = 1020.0
-offset_right = 1908.0
+offset_right = 1883.0
 offset_bottom = 1047.0
 rotation = -0.00440645
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)

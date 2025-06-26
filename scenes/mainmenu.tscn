@@ -1,0 +1,107 @@
+[gd_scene load_steps=7 format=3 uid="uid://p3b2o865xjl4"]
+
+[ext_resource type="Script" path="res://scripts/mainmenu.gd" id="1_1s3jq"]
+[ext_resource type="FontFile" uid="uid://bdncefcriiiu5" path="res://assets/Born2bSportyFS.otf" id="2_k6dpg"]
+[ext_resource type="Texture2D" uid="uid://cyjyooj3adcea" path="res://assets/fantasy_pixelart_ui/panels/silver_panel.png" id="5_o7wgf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_l0i7c"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_jnlre"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i6esr"]
+texture = ExtResource("5_o7wgf")
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 0.994
+offset_bottom = -0.52002
+script = ExtResource("1_1s3jq")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+top_level = true
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 773.0
+offset_top = 508.0
+offset_right = -793.0
+offset_bottom = -380.0
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
+self_modulate = Color(0.564962, 0.564962, 0.564962, 0)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="start" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+theme_override_colors/font_color = Color(0.783523, 0.783523, 0.783523, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 0
+theme_override_fonts/font = ExtResource("2_k6dpg")
+theme_override_font_sizes/font_size = 55
+theme_override_styles/normal = SubResource("StyleBoxEmpty_l0i7c")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_l0i7c")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_l0i7c")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_l0i7c")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_l0i7c")
+text = "START"
+
+[node name="quit" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+theme_override_colors/font_color = Color(0.783523, 0.783523, 0.783523, 1)
+theme_override_colors/font_hover_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_k6dpg")
+theme_override_font_sizes/font_size = 55
+theme_override_styles/normal = SubResource("StyleBoxEmpty_jnlre")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_jnlre")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_jnlre")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_jnlre")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_jnlre")
+text = "       QUIT‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ 
+"
+
+[node name="TitleText" type="RichTextLabel" parent="."]
+texture_filter = 1
+layout_mode = 2
+offset_left = 813.0
+offset_top = 423.0
+offset_right = 1149.0
+offset_bottom = 514.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("2_k6dpg")
+theme_override_fonts/bold_font = ExtResource("2_k6dpg")
+theme_override_fonts/italics_font = ExtResource("2_k6dpg")
+theme_override_fonts/bold_italics_font = ExtResource("2_k6dpg")
+theme_override_fonts/mono_font = ExtResource("2_k6dpg")
+theme_override_font_sizes/normal_font_size = 62
+text = "Desktop Cat"
+
+[node name="Panel" type="Panel" parent="."]
+modulate = Color(1, 1, 1, 0.552941)
+show_behind_parent = true
+z_index = -1
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 767.0
+offset_top = 408.0
+offset_right = -786.0
+offset_bottom = -367.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_i6esr")
+
+[connection signal="pressed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/quit" to="." method="_on_quit_pressed"]

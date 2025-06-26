@@ -20,37 +20,31 @@ func _physics_process(delta):
 	# Update mouse position every frame for movement tracking
 	mousePos = get_global_mouse_position()
 
-	# Debugging the mouse position distance
-	print("Distance to mouse: ", position.distance_to(mousePos))
-
-	# Check if mouse is far enough to start moving
+	
 	if position.distance_to(mousePos) > 350 and goingToRest==false and rest!=true:
 		move = true
-		print("Moving towards mouse")  # Debugging move trigger
+	
 
-	# Debugging rest behavior
+	
 	if Input.is_action_just_pressed("q"):
 		get_tree().quit()
 	if Input.is_action_just_pressed("rmb") and rest==false:
-		print("Going to rest!")  # Debugging right-click trigger
+	 
 		goingToRest = true
 	if Input.is_action_just_pressed("rmb") and rest!=false:
 		rest=false
 
-	# Resting behavior (go to a fixed position)
+
 	if goingToRest:
-		print("Resting: Moving to fixed position")
 		velocity = position.direction_to(Vector2(1811, 918)) * SPEED * 2
 		if position.distance_to(Vector2(1811, 918)) < 5:
 			move = false
 			goingToRest = false
 			rest=true
-			print("Reached rest position")
 	if rest==true:
 		velocity=Vector2.ZERO
-	# Moving towards mouse if not resting
+
 	if move:
-		print("Moving towards mouse position")
 		velocity = position.direction_to(mousePos) * SPEED * 2
 
 	if position.distance_to(mousePos) < 10:
@@ -86,3 +80,5 @@ func set_passthrough(sprite: Sprite2D):
 
 	# Set mouse passthrough only for the pet's texture region
 	DisplayServer.window_set_mouse_passthrough(texture_corners)
+
+	
