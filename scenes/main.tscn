@@ -98,6 +98,13 @@ position = Vector2(-1.6, 2.39999)
 scale = Vector2(0.375, 0.3375)
 texture = ExtResource("4_h5o5u")
 
+[node name="text" type="RichTextLabel" parent="Cat"]
+offset_left = -59.0
+offset_top = -42.0
+offset_right = 157.0
+offset_bottom = 35.0
+text = "take proper rests"
+
 [node name="Chair" type="StaticBody2D" parent="."]
 light_mask = 2
 visibility_layer = 2
